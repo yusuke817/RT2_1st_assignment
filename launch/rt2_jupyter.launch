@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+
+<launch>
+    
+    <!-- Include the already created .launch files -->
+    <include file="$(find final_assignment)/launch/simulation_gmapping.launch"/>
+    <include file="$(find final_assignment)/launch/move_base.launch"/>
+    
+    <!-- Run the main_ui node -->
+    <node pkg="final_assignment" type="set_mode.py" name="set_mode_ui" output="screen" required="true" launch-prefix="xterm -e"/>
+    
+    <!-- Run the jupyter notebook -->
+   
+</launch>

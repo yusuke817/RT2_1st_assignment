@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+
+<launch>
+    <include file="$(find final_assignment)/launch/simulation_gmapping.launch"/>
+    <include file="$(find final_assignment)/launch/move_base.launch"/>
+    <node pkg="final_assignment" type="mode.py" name="mode" output="screen" required="true" launch-prefix="xterm -e">
+    </node>    
+</launch>
