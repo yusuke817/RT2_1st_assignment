@@ -1,0 +1,83 @@
+\hypertarget{menu_8py}{}\doxysection{scripts/menu.py File Reference}
+\label{menu_8py}\index{scripts/menu.py@{scripts/menu.py}}
+
+
+python script about UI for drivng simulation(\href{file:///root/ros_ws/src/final_assignment/docs/html/menu_8py.html}{\texttt{ file\+:///root/ros\+\_\+ws/src/final\+\_\+assignment/docs/html/menu\+\_\+8py.\+html}})  
+
+
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{menu_8py_a8d5c5c2341a73d2e5dfa72e0230e2d02}\label{menu_8py_a8d5c5c2341a73d2e5dfa72e0230e2d02}} 
+def \mbox{\hyperlink{menu_8py_a8d5c5c2341a73d2e5dfa72e0230e2d02}{menu.\+menu\+\_\+ui}} ()
+\begin{DoxyCompactList}\small\item\em menu \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{menu_8py_a5bc6d832478bf5551f3156c6a722cc77}\label{menu_8py_a5bc6d832478bf5551f3156c6a722cc77}} 
+def \mbox{\hyperlink{menu_8py_a5bc6d832478bf5551f3156c6a722cc77}{menu.\+get\+\_\+user\+\_\+input}} ()
+\begin{DoxyCompactList}\small\item\em brief getting and checking user input and asking for another user input if it is ineffective \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{menu_8py_a15c5c3f6f7329d0bda5ff572d02ca55e}\label{menu_8py_a15c5c3f6f7329d0bda5ff572d02ca55e}} 
+def \mbox{\hyperlink{menu_8py_a15c5c3f6f7329d0bda5ff572d02ca55e}{menu.\+display\+\_\+goal}} ()
+\begin{DoxyCompactList}\small\item\em displaying the goal coordinate \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{menu_8py_ac276480fe7fe8933509061b0f4069319}\label{menu_8py_ac276480fe7fe8933509061b0f4069319}} 
+def \mbox{\hyperlink{menu_8py_ac276480fe7fe8933509061b0f4069319}{menu.\+fix\+\_\+goal}} ()
+\begin{DoxyCompactList}\small\item\em In Auto\+\_\+drive mode, fixing the goal coordinate. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{menu_8py_a1dd9fd2233a7008420ba2e4e2d069fae}\label{menu_8py_a1dd9fd2233a7008420ba2e4e2d069fae}} 
+def \mbox{\hyperlink{menu_8py_a1dd9fd2233a7008420ba2e4e2d069fae}{menu.\+receive\+\_\+goal}} (msg)
+\begin{DoxyCompactList}\small\item\em these two values are stored and subscribed by move\+\_\+base topic \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{menu_8py_a3cb5ba4e5fa3e8ff79ceba3e4246a2aa}\label{menu_8py_a3cb5ba4e5fa3e8ff79ceba3e4246a2aa}} 
+def \mbox{\hyperlink{menu_8py_a3cb5ba4e5fa3e8ff79ceba3e4246a2aa}{menu.\+check\+\_\+goal}} (msg)
+\begin{DoxyCompactList}\small\item\em checking whether the goal is reachable or not and notifying arrival \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{menu_8py_a37c932161117972b0d63dfebce92ca69}\label{menu_8py_a37c932161117972b0d63dfebce92ca69}} 
+def \mbox{\hyperlink{menu_8py_a37c932161117972b0d63dfebce92ca69}{menu.\+cancel\+\_\+process}} ()
+\begin{DoxyCompactList}\small\item\em cancelling the process before reaching the goal \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{menu_8py_a7ba16f393245535c65b21828c7786035}\label{menu_8py_a7ba16f393245535c65b21828c7786035}} 
+def \mbox{\hyperlink{menu_8py_a7ba16f393245535c65b21828c7786035}{menu.\+finish\+\_\+process}} ()
+\begin{DoxyCompactList}\small\item\em finishing the process before reaching the goal \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{menu_8py_ab8d987fb1d0a6b564b5087178ce1ad36}\label{menu_8py_ab8d987fb1d0a6b564b5087178ce1ad36}} 
+def \mbox{\hyperlink{menu_8py_ab8d987fb1d0a6b564b5087178ce1ad36}{menu.\+manual\+\_\+driving}} ()
+\begin{DoxyCompactList}\small\item\em with teleop\+\_\+twist\+\_\+keyboard, user can maneuver a car \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{menu_8py_a1bb5854fac6082f3d04deb0e80a9870c}\label{menu_8py_a1bb5854fac6082f3d04deb0e80a9870c}} 
+def \mbox{\hyperlink{menu_8py_a1bb5854fac6082f3d04deb0e80a9870c}{menu.\+assisted\+\_\+driving}} (msg)
+\begin{DoxyCompactList}\small\item\em in each step, car collects the information on the distance between a car and an object with laserscan topic and decide the speed in assisted mode \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{menu_8py_a607935bb1383d5aed4259b0cc4e8fb3f}\label{menu_8py_a607935bb1383d5aed4259b0cc4e8fb3f}} 
+def \mbox{\hyperlink{menu_8py_a607935bb1383d5aed4259b0cc4e8fb3f}{menu.\+actual\+\_\+vel}} (msg)
+\begin{DoxyCompactList}\small\item\em with teleop\+\_\+twist\+\_\+keyboard, user can change the speed of a car \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{menu_8py_ad39e7730217226be9036f6577e719a87}\label{menu_8py_ad39e7730217226be9036f6577e719a87}} 
+def \mbox{\hyperlink{menu_8py_ad39e7730217226be9036f6577e719a87}{menu.\+choose\+\_\+driving\+\_\+mode}} (user\+\_\+input)
+\begin{DoxyCompactList}\small\item\em choose\+\_\+driving\+\_\+mode \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{menu_8py_a2bfc064f530792235d159fcb30535064}\label{menu_8py_a2bfc064f530792235d159fcb30535064}} 
+def \mbox{\hyperlink{menu_8py_a2bfc064f530792235d159fcb30535064}{menu.\+main}} ()
+\begin{DoxyCompactList}\small\item\em main \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{menu_8py_ae75a6b81feb2951554d7f1b8ccbc54d1}\label{menu_8py_ae75a6b81feb2951554d7f1b8ccbc54d1}} 
+string \mbox{\hyperlink{menu_8py_ae75a6b81feb2951554d7f1b8ccbc54d1}{menu.\+initial\+\_\+cmd}} = \textquotesingle{}a\textquotesingle{}
+\begin{DoxyCompactList}\small\item\em In the manual mode, user can get out of the loop when he pushes \char`\"{}p.\char`\"{} Here, we set the value as \char`\"{}a\char`\"{} in initial state. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{menu_8py_abe50ca4d250b05a95292ab38ee4f4e32}\label{menu_8py_abe50ca4d250b05a95292ab38ee4f4e32}} 
+float \mbox{\hyperlink{menu_8py_abe50ca4d250b05a95292ab38ee4f4e32}{menu.\+dis\+\_\+th}} = 0.\+5
+\begin{DoxyCompactList}\small\item\em range as arriving at the goal ~\newline
+ \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{menu_8py_a3d6ef53047958b5a4ae9a44f0456c8c1}\label{menu_8py_a3d6ef53047958b5a4ae9a44f0456c8c1}} 
+float \mbox{\hyperlink{menu_8py_a3d6ef53047958b5a4ae9a44f0456c8c1}{menu.\+obj\+\_\+th}} = 1.\+0
+\begin{DoxyCompactList}\small\item\em threshold for collision avoidance \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{menu_8py_a362abfc5aa129e7f91ea2ae33cbf7e6c}\label{menu_8py_a362abfc5aa129e7f91ea2ae33cbf7e6c}} 
+\mbox{\hyperlink{menu_8py_a362abfc5aa129e7f91ea2ae33cbf7e6c}{menu.\+time\+\_\+th}} = rospy.\+Duration(60)
+\begin{DoxyCompactList}\small\item\em 1 minute is the maximum time for the car to reach the goal ~\newline
+ \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{menu_8py_a9bfd8d63ab6ed14542ffdd745be3e87f}\label{menu_8py_a9bfd8d63ab6ed14542ffdd745be3e87f}} 
+\mbox{\hyperlink{menu_8py_a9bfd8d63ab6ed14542ffdd745be3e87f}{menu.\+vel\+\_\+msg}} = Twist()
+\begin{DoxyCompactList}\small\item\em defining vel\+\_\+msg \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+python script about UI for drivng simulation(\href{file:///root/ros_ws/src/final_assignment/docs/html/menu_8py.html}{\texttt{ file\+:///root/ros\+\_\+ws/src/final\+\_\+assignment/docs/html/menu\+\_\+8py.\+html}}) 
+
+\begin{DoxyAuthor}{Author}
+Yusuke Kido 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+0.\+1 
+\end{DoxyVersion}
+\begin{DoxyDate}{Date}
+20/04/2022 
+\end{DoxyDate}
