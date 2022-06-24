@@ -1,6 +1,6 @@
 # RT2_1st_assignment
 # Purpose
-This is the repository for rt2_1st_assignment. The author is Yusuke Kido. This assifnment is composed of 3 parts:Documentation, jupyter notebook, and Statistics.
+This is the repository for rt2_1st_assignment. The author is Yusuke Kido. This assignment is composed of 3 parts:Documentation, jupyter notebook, and Statistics.
 
 # Documentation
 I modulated "menu.py" developped in the final assignment in RT1.
