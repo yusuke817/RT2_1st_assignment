@@ -1,0 +1,93 @@
+\hypertarget{mode_8py}{}\doxysection{scripts/mode.py File Reference}
+\label{mode_8py}\index{scripts/mode.py@{scripts/mode.py}}
+
+
+python script about UI for drivng simulation  
+
+
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{mode_8py_a2a4a058e3f6c6faad58489e9acb41e19}\label{mode_8py_a2a4a058e3f6c6faad58489e9acb41e19}} 
+def \mbox{\hyperlink{mode_8py_a2a4a058e3f6c6faad58489e9acb41e19}{mode.\+fix\+\_\+goal\+\_\+dist}} (req)
+\begin{DoxyCompactList}\small\item\em In Auto\+\_\+drive mode, fixing the goal coordinate by receiving the dist service. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{mode_8py_a6bf26e0f7230e77a49a4f23482e5b80d}\label{mode_8py_a6bf26e0f7230e77a49a4f23482e5b80d}} 
+def \mbox{\hyperlink{mode_8py_a6bf26e0f7230e77a49a4f23482e5b80d}{mode.\+receive\+\_\+goal}} (msg)
+\begin{DoxyCompactList}\small\item\em these two values are stored and subscribed by move\+\_\+base topic \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{mode_8py_a7a5d64fc212e016562dcc42e3237a58d}\label{mode_8py_a7a5d64fc212e016562dcc42e3237a58d}} 
+def \mbox{\hyperlink{mode_8py_a7a5d64fc212e016562dcc42e3237a58d}{mode.\+change\+\_\+mode\+\_\+cmd}} (req)
+\begin{DoxyCompactList}\small\item\em choosing the driving mode by receiving the cmd service \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{mode_8py_a962107321a5bbb3c4c8ba3d99049ae1a}\label{mode_8py_a962107321a5bbb3c4c8ba3d99049ae1a}} 
+def \mbox{\hyperlink{mode_8py_a962107321a5bbb3c4c8ba3d99049ae1a}{mode.\+check\+\_\+goal}} (msg)
+\begin{DoxyCompactList}\small\item\em checking whether the goal is reachable or not and notifying arrival \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{mode_8py_ac7bd4fd21507f68c1ddd8cbcc3ebb896}\label{mode_8py_ac7bd4fd21507f68c1ddd8cbcc3ebb896}} 
+def \mbox{\hyperlink{mode_8py_ac7bd4fd21507f68c1ddd8cbcc3ebb896}{mode.\+cancel\+\_\+goal}} ()
+\begin{DoxyCompactList}\small\item\em cancelling the process before reaching the goal \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{mode_8py_a0a64155468a4958d3913cb81ff609a6f}\label{mode_8py_a0a64155468a4958d3913cb81ff609a6f}} 
+def \mbox{\hyperlink{mode_8py_a0a64155468a4958d3913cb81ff609a6f}{mode.\+finish\+\_\+process}} ()
+\begin{DoxyCompactList}\small\item\em finishing the process before reaching the goal \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{mode_8py_a2ee304c35425d4aff5ea21ff6bb97c4e}\label{mode_8py_a2ee304c35425d4aff5ea21ff6bb97c4e}} 
+def \mbox{\hyperlink{mode_8py_a2ee304c35425d4aff5ea21ff6bb97c4e}{mode.\+assisted\+\_\+driving}} (msg)
+\begin{DoxyCompactList}\small\item\em in each step, car collects the information on the distance between a car and an object with laserscan topic and decide the speed in assisted mode \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{mode_8py_a68b1eb6ecde624ee16d6f8741ed65eff}\label{mode_8py_a68b1eb6ecde624ee16d6f8741ed65eff}} 
+def \mbox{\hyperlink{mode_8py_a68b1eb6ecde624ee16d6f8741ed65eff}{mode.\+actual\+\_\+vel}} (msg)
+\begin{DoxyCompactList}\small\item\em with teleop\+\_\+twist\+\_\+keyboard, user can change the speed of a car \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{mode_8py_a830d11735aafabeface7eb6f4b8446eb}\label{mode_8py_a830d11735aafabeface7eb6f4b8446eb}} 
+def {\bfseries mode.\+choose\+\_\+driving\+\_\+mode} ()
+\item 
+\mbox{\Hypertarget{mode_8py_a5e4d01c9bb72fa53aa1c59e88a8664b7}\label{mode_8py_a5e4d01c9bb72fa53aa1c59e88a8664b7}} 
+def {\bfseries mode.\+main} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{mode_8py_a729844bb95f51c16ff194e7b06abc05e}\label{mode_8py_a729844bb95f51c16ff194e7b06abc05e}} 
+float {\bfseries mode.\+dis\+\_\+th} = 0.\+5
+\item 
+\mbox{\Hypertarget{mode_8py_aa798d0bfd482823d0d841f83429d077e}\label{mode_8py_aa798d0bfd482823d0d841f83429d077e}} 
+float {\bfseries mode.\+obj\+\_\+th} = 1.\+0
+\item 
+\mbox{\Hypertarget{mode_8py_acbc1e684183d01a1c05098df03866c5d}\label{mode_8py_acbc1e684183d01a1c05098df03866c5d}} 
+{\bfseries mode.\+time\+\_\+th} = rospy.\+Duration(60)
+\item 
+\mbox{\Hypertarget{mode_8py_a98f3191abd661454a9a82e73be562bc7}\label{mode_8py_a98f3191abd661454a9a82e73be562bc7}} 
+{\bfseries mode.\+vel\+\_\+msg} = Twist()
+\item 
+\mbox{\Hypertarget{mode_8py_a7e80ee8e9978e1a46f024fd814871a90}\label{mode_8py_a7e80ee8e9978e1a46f024fd814871a90}} 
+bool {\bfseries mode.\+yesno\+\_\+goal} = False
+\item 
+\mbox{\Hypertarget{mode_8py_a22c083493bea32f32350b48b20ad7487}\label{mode_8py_a22c083493bea32f32350b48b20ad7487}} 
+int {\bfseries mode.\+reached} = 0
+\item 
+\mbox{\Hypertarget{mode_8py_aab8293cd5b9ee89a1122963d7b980fb3}\label{mode_8py_aab8293cd5b9ee89a1122963d7b980fb3}} 
+int {\bfseries mode.\+unreached} = 0
+\item 
+\mbox{\Hypertarget{mode_8py_a2ffb655d6aa2584155684e4e03534d4e}\label{mode_8py_a2ffb655d6aa2584155684e4e03534d4e}} 
+bool {\bfseries mode.\+goal\+\_\+aim} = False
+\item 
+\mbox{\Hypertarget{mode_8py_a54bba62fe5a958260c0988743aa4d1b6}\label{mode_8py_a54bba62fe5a958260c0988743aa4d1b6}} 
+{\bfseries mode.\+goal\+\_\+msg} = Move\+Base\+Goal()
+\item 
+\mbox{\Hypertarget{mode_8py_a0d273c7302f433ce50394bad2fbe843a}\label{mode_8py_a0d273c7302f433ce50394bad2fbe843a}} 
+int {\bfseries mode.\+mode} = 7
+\item 
+\mbox{\Hypertarget{mode_8py_ac3bb4fe21c29d86d502b613be885ba37}\label{mode_8py_ac3bb4fe21c29d86d502b613be885ba37}} 
+int {\bfseries mode.\+user\+\_\+input} = 8
+\item 
+\mbox{\Hypertarget{mode_8py_a3ce334bb16aabf824772d3b8083f8333}\label{mode_8py_a3ce334bb16aabf824772d3b8083f8333}} 
+bool {\bfseries mode.\+mode\+\_\+change} = False
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+python script about UI for drivng simulation 
+
+\begin{DoxyAuthor}{Author}
+Yusuke Kido 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+0.\+1 
+\end{DoxyVersion}
+\begin{DoxyDate}{Date}
+28/06/2022 
+\end{DoxyDate}
