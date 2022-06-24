@@ -1,3 +1,9 @@
 # RT2_1st_assignment
-# Purpose and Summary
-I created final_assignment package in order to learn how to use ROS, Rviz and Gazebo.
+# Purpose
+This assifnment is composed of 3 parts:Documentation, jupyter notebook, and Statistics.
+
+# Documentation
+I modulated "menu.py" developped in the final assignment in RT1. 
+
+# jupyter notebook
+I developped "mode.py" and jupy.ipynb.
