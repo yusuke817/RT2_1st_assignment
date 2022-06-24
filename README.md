@@ -10,3 +10,5 @@ You can check my documentation in this URL (file:///root/ros_ws/src/final_assign
 I developped "mode.py" and "jupy.ipynb."
 
 # statistics
+I did the required experiment and wrote the report on the results of it in "RT2.pdf."
+Also,
