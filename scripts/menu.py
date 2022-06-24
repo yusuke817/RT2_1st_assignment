@@ -8,14 +8,18 @@
 # \date  20/04/2022
 
 ## @detail
-# \Subscribes to: <BR> /input_cmd_vel /move_base/goal /scan
+# \Subscribes to: <BR>
+#    /move_base/goal to receive the goal position 
+#    /move_base/feedback for the simulatior to send the robot position
+#    /scan including the information on distances with laser scanner
+#    /input_cmd_vel to remap the desired velocity user decides
 
 # \Publishes to: <BR>
-# /cmd_vel
-# /move_base/goal
+# /cmd_vel to define the velocity
+# /move_base/goal to publish the destination in auto drive mode
 
 # \Services : <BR>
-# /gazebo/reset_world
+# /gazebo/reset_world to reset the robot position
 
 # \Description :
 # The code enables the robot (car) to take user input and collect car's position and give the velocity and the information on the goal.

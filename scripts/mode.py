@@ -2,10 +2,10 @@
 
 ## @package final_assignment
 # \file mode.py
-# \brief python script about UI for drivng simulation(file:///root/ros_ws/src/final_assignment/docs/html/menu_8py.html)
+# \brief python script about UI for drivng simulation
 # \author Yusuke Kido
 # \version 0.1
-# \date  01/06/2022
+# \date 28/06/2022
 
 ## @detail
 # \Subscribes to: <BR> /input_cmd_vel /move_base/goal /scan
@@ -20,48 +20,48 @@
 # \Description :
 # The code enables the robot (car) to take user input and collect car's position and give the velocity and the information on the goal.
 
-# import ros stuff
 import rospy
 import time
 import os
 import actionlib
-from sensor_msgs.msg import LaserScan
-from geometry_msgs.msg import Twist
 from std_srvs.srv import Empty
 from move_base_msgs.msg import MoveBaseAction, MoveBaseGoal
 from move_base_msgs.msg import MoveBaseActionFeedback
 from move_base_msgs.msg import MoveBaseActionGoal
-from actionlib_msgs.msg import GoalID
-from final_assignment.srv import cmd, cmdResponse
-from final_assignment.srv import dist, distResponse
-from final_assignment.msg import reach
+from geometry_msgs.msg import Twist
+from sensor_msgs.msg import LaserScan
+from rt2_first_assignment.srv import Cmd, CmdResponse
+from rt2_first_assignment.srv import Dist, DistResponse
+from rt2_first_assignment.msg import reach
 
-# global variable
-## In the manual mode, user can get out of the loop when he pushes "p." Here, we set the value as "a" in initial state 
-initial_cmd = 'a'
-## range as arriving at the goal  
+# range as arriving at the goal  
 dis_th = 0.5
-## threshold for collision avoidance 
+
+# threshold for collision avoidance 
 obj_th = 1.0
-## 1 minute is the maximum time for the car to reach the goal  
+
+# 1 minute is the maximum time for the car to reach the goal  
 time_th = rospy.Duration(60)
-## defining vel_msg 
+
+# defining vel_msg 
 vel_msg = Twist()  
 
 # There is no goal set at the beginning
 yesno_goal = False
 
 # This variable is for data analysis. There is no goal reached at the beginning
-reach = 0
+reached = 0
 
 # This variable is for data analysis. There is no goal notreach at the beginning
-notreach = 0
+unreached = 0
 
 # It will be true while the robot is aiming at the goal 
 goal_aim = False
 
-init_goal_msg = MoveBaseGoal()
+goal_msg = MoveBaseGoal()
+
 mode = 7
+
 user_input = 8
 
 # to check whether mode is changed or not
@@ -70,66 +70,67 @@ mode_change = False
 def fix_goal_dist(req):
     '''!In Auto_drive mode, fixing the goal coordinate by receiving the dist service'''     
     global yesno_goal, start_time, input_x, input_y, auto_mode, action_client
-    # resetting the terminal
     
     # Receiving the destination from jupyter with service in auto driving mode
     input_x = req.pos_x
     input_y = req.pos_y
-    print('Goal coordinates : (', input_x, ' , ', input_y, ')\n')
-	
+    print('Goal is set and its coordinates are: (', input_x, ' , ', input_y, ')\n')
+    # Check if the autonomus driving mode is selected
     if auto_mode:
-        # send a goal to the robot to move to the destination
-        init_goal_msg.goal.target_pose.header.frame_id = "map"
-        init_goal_msg.goal.target_pose.pose.position.x = input_x
-        init_goal_msg.goal.target_pose.pose.position.y = input_y
-        init_goal_msg.goal.target_pose.pose.orientation.w = 1.0    
+    # send a goal to the robot to move to the destination
+    	goal_msg.target_pose.header.frame_id = "map"
+    	goal_msg.target_pose.pose.orientation.w = 1
 
-        # publishing message and geting the time of reaching
-        start_time = rospy.Time.now() 
+    	goal_msg.target_pose.pose.position.x = input_x
+    	goal_msg.target_pose.pose.position.y = input_y
 
-        # goal is set
-        yesno_goal = True
-        # Send the goal msg to the action server
-        action_client.send_goal(init_goal_msg)
-        return distResponse(1)
-    
+    	# publishing message and geting the time of reaching
+    	start_time = rospy.Time.now()
+    	# goal is set
+    	yesno_goal = True
+    	# Send the goal msg to the action server
+    	action_client.send_goal(goal_msg)
+    	return DistResponse(1)
+    	
     # Function will return 0 not in auto driving mode
     else:
-        return distResponse(0)
+    	return DistResponse(0)
+
 
 def receive_goal(msg):
     '''!these two values are stored and subscribed by move_base topic'''
     global decided_x, decided_y
     decided_x = msg.goal.target_pose.pose.position.x
     decided_y = msg.goal.target_pose.pose.position.y
-
+    
+   
 def change_mode_cmd(req):
-    '''!choosing the driving mode by receiving the cmd service'''     
-    global mode, mode_change, user_input
-
-    mode = req.command
+    '''!choosing the driving mode by receiving the cmd service''' 
+    global mode, user_input, mode_change
+    mode = req.cmd
     if mode == 0 or mode == 1 or mode == 2 or mode == 3 or mode == 4 or mode == 5:
     	if mode != user_input:
     		user_input = mode
     		mode_change = True
-    		return cmdResponse(1) # success in changing mode
+    		return CmdResponse(1) # success in changing mode
     	else:
-    		return cmdResponse(2) # already changed 
+    		return CmdResponse(2) # already changed 
     		mode_change = False
     else:
-    	return cmdResponse(0) # improper input
+    	return CmdResponse(0) # improper input
     	mode_change = False
+
 
 def check_goal(msg):
     '''!checking whether the goal is reachable or not and notifying arrival'''
-    global yesno_goal
+    global yesno_goal, reached
     if yesno_goal:
         # time calculation
         end_time = rospy.Time.now()
         reaching_time = end_time - start_time #line 87
         # If it takes much time, destination will be recognized as unreachable and finish (cancel) the process
         if reaching_time > time_th:
-            cancel_process()
+            cancel_goal()
             print('target is far from here: it takes too much time to reach\n\n')
             rospy.sleep(1)
             
@@ -144,39 +145,40 @@ def check_goal(msg):
         # checking if it's close enough to be considered goal reached and finish the process
         if abs(dist_x) < dis_th and abs(dist_y) < dis_th:
             # Add the number of reaching
-            reach = reach + 1
+            reached = reached + 1
             goal_reached = True     
-            finish_process() 
+            finish_process()
             print('Reached the goal\n\n')               
             rospy.sleep(1)
-            
-def cancel_process():
+          
+def cancel_goal():
     '''!cancelling the process before reaching the goal'''
-    global goal_set, reached, notreach, pub_status, action_client
+    global yesno_goal, reached, unreached, pub_status, action_client
     # No goal has been set
-    if not goal_set:
+    if not yesno_goal:
         return
      # If there is a goal, cancel it
     else:
         action_client.cancel_goal()
-        goal_set = False
+        yesno_goal = False
         # Increase the notreach target count
-        notreach = notreach + 1
+        unreached = unreached + 1
         # The goal is canceled
-        pub_status.publish(reached, notreach)
+        pub_status.publish(reached, unreached)
 	    
 def finish_process():
     '''!finishing the process before reaching the goal'''
-    global goal_set, reached, notreach, pub_status, action_client
+    global yesno_goal, reached, unreached, pub_status, action_client
     # No goal has been set
-    if not goal_set:
+    if not yesno_goal:
         return
      # If there is a goal, cancel it
     else:
         action_client.cancel_goal()
-        goal_set = False
+        yesno_goal = False
         # The goal is canceled 
-        pub_status.publish(reached, notreach)    
+        pub_status.publish(reached, unreached) 
+
 
 def assisted_driving(msg):
     '''!in each step, car collects the information on the distance between a car and an object with laserscan topic and decide the speed in assisted mode'''
@@ -241,6 +243,7 @@ def assisted_driving(msg):
         # publish modified (assisted) velocity
         pub_vel.publish(vel_msg)
 
+
 def actual_vel(msg):
     '''!with teleop_twist_keyboard, user can change the speed of a car'''
     global vel_msg, pub_vel
@@ -256,9 +259,8 @@ def actual_vel(msg):
     	else:
     		vel_msg.linear.x = msg.linear.x
     		vel_msg.angular.z = msg.angular.z    		
-     
+	
 def choose_driving_mode():
-    '''!choose_driving_mode'''
     global manual_mode, drive_assist, user_input, auto_mode
 
     # Auto_drive
@@ -287,7 +289,7 @@ def choose_driving_mode():
     	auto_mode = False
     	manual_mode = False
     	drive_assist = False       
-    	cancel_process()
+    	cancel_goal()
     	print('user cancelled the goal\n')
     
     # to reset car position
@@ -312,10 +314,12 @@ def choose_driving_mode():
         os.system('clear')
         print('INVALID command.\n')
         
+
 def main():
-    '''!main'''
-    global yesno_goal, drive_assist, manual_mode, auto_mode, user_input, goal_to_cancel, mode_change
-    global pub_goal, pub_vel, pub_cancel, sub_laser, sub_goal, sub_vel, sub_car_pos, reset_world, action_client
+    # global variables
+    global auto_mode, reset_world, get_mode, get_target
+    global yesno_goal, drive_assist, manual_mode, user_input, goal_to_cancel, mode_change
+    global pub_vel, pub_status, sub_laser, sub_goal, sub_user_vel, sub_robot_pos, action_client
 
     #initializing the mode: no goal, no assist, no manual(equivalent to automatic) are the original state
 
@@ -326,41 +330,40 @@ def main():
     # initialize the mode which means that a car is not in manual mode
     manual_mode = False
     # initialize the mode which means that a car is not in auto mode
-    auto_mode = False    
+    auto_mode = False  
 
-    # initializing the node
+    # Initialize the node, setup the NodeHandle for handling the communication with the ROS system  
     rospy.init_node('mode')
 
-    # resetting gazebo
+    # Create a client to reset the simulation environment
     rospy.wait_for_service('/gazebo/reset_world')
     reset_world = rospy.ServiceProxy('/gazebo/reset_world', Empty)
-
-    #service
-    # make server to receive the request from the cmd service
-    get_mode = rospy.Service('/command', cmd, change_mode_cmd)
-    # make server to receive the request from the dist service
-    get_target = rospy.Service('/dist', dist, fix_goal_dist)
-
+    # Create the server to answer the request from the command service
+    get_modality = rospy.Service('/cmd', Cmd, change_mode_cmd)
+    # Create the server to answer the request from the target service
+    get_target = rospy.Service('/dist', Dist, fix_goal_dist)
+	
     # Initialize the action client
     action_client = actionlib.SimpleActionClient('/move_base', MoveBaseAction)
 
-    # setting publishers
-    pub_vel = rospy.Publisher('/cmd_vel', Twist, queue_size=200)
-    pub_goal = rospy.Publisher('/reach_goal', reach, queue_size=200)
+    # Initialize publishers
+    pub_vel = rospy.Publisher('/cmd_vel', Twist, queue_size=100)
+    pub_status = rospy.Publisher('/status_goal', reach, queue_size = 100)
 
-    # setting subscribers
-    sub_goal = rospy.Subscriber('move_base/goal', MoveBaseActionGoal, receive_goal) #getting feedback on goal
-    sub_car_pos = rospy.Subscriber('move_base/feedback', MoveBaseActionFeedback, check_goal) # current position
-    sub_laser = rospy.Subscriber('/scan', LaserScan, assisted_driving) # information on laser scanner
-    sub_vel = rospy.Subscriber('/input_cmd_vel', Twist, actual_vel) # getting velocity
-
+    # Initialize subscribers
+    sub_laser = rospy.Subscriber('/scan', LaserScan, assisted_driving)
+    sub_goal = rospy.Subscriber('move_base/goal', MoveBaseActionGoal, receive_goal)
+    sub_user_vel = rospy.Subscriber('/input_cmd_vel', Twist, actual_vel)
+    sub_robot_pos = rospy.Subscriber('move_base/feedback', MoveBaseActionFeedback, check_goal)
 
     # the loop keeps going on until user pushes "5" which is the reset button
     while not rospy.is_shutdown():
-        # Check if the mode was changed
-        if mode_change:
+        # Check if the modality was changed
+        if mode_change:	
+        	# Decide what to do based on user decision
         	choose_driving_mode()
-        	mode_change = False	
+        	mode_change = False
+
 
 if __name__ == '__main__':
     main()
