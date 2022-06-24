@@ -11,4 +11,6 @@ I developped "mode.py" and "jupy.ipynb." for making the UI to control the robot 
 
 # statistics
 I did the required experiment and wrote the report on the results of it in "RT2.pdf."
-Also,
+Also, the movie in the experiment is shown below. I recommend you that you should change the resolution into 1080p to read the characters in the terminals.
+<br>
+[![](https://img.youtube.com/vi/mwPPHWJMLmY/0.jpg)](https://www.youtube.com/watch?v=mwPPHWJMLmY)
